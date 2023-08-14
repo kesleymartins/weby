@@ -4,10 +4,8 @@ class App
       'Content-Type' => 'text/html'
     }
 
-    response = [
-      '<h1>Hello World</h1>'
-    ]
-
-    [200, headers, response]
+    response_html = File.read('views/index.html')
+    
+    [200, headers, [response_html]]
   end
 end
