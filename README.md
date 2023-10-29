@@ -8,4 +8,6 @@ bundle install
 
 # Open server
 rackup
+
+The server will be avaliable on localhost:9292
 ```
