@@ -1,19 +1,17 @@
-require 'erb'
+require_relative './config/routes'
 
 class App
   def call(env)
-    headers = {
-      'Content-Type' => 'text/html'
-    }
+    headers = { 'Content-Type' => 'text/html' }
 
-    title = 'Ruby on Rails'
-    erb = ERB.new(html_template)
-    response_html = erb.result(binding)
+    response_html = router.build_response(env)
 
     [200, headers, [response_html]]
   end
 
-  def html_template
-    File.read('views/index.html.erb')
+  private
+
+  def router
+    Router.instance
   end
 end
