@@ -14,7 +14,17 @@ class Router
   end
 
   def get(path, &block)
-    @routes[path] = block
+    if block
+      @routes[path] = block
+    elsif path.include? '/'
+      controller, action = path.split('/')
+      controller_klass_name = "#{controller.capitalize}Controller"
+      controller_klass = Object.const_get(controller_klass_name)
+
+      @routes[path.prepend('/')] = lambda { |env|
+        controller_klass.new(env).send(action.to_sym)
+      }
+    end
   end
 
   def build_response(env)
